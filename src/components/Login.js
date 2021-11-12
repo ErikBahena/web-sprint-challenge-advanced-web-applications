@@ -7,9 +7,10 @@ const initialFormState = {
   username: "",
   password: "",
 };
+
 const initialFormError = "";
 
-const Login = () => {
+const Login = (props) => {
   const [formState, setFormState] = useState(initialFormState);
   const [error, setError] = useState(initialFormError);
 
@@ -24,8 +25,9 @@ const Login = () => {
       .post(`http://localhost:5000/api/login`, formState)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        props.history.push("/view");
       })
-      .catch((err) => {
+      .catch(() => {
         setError("The username or password is incorrect");
       });
   };

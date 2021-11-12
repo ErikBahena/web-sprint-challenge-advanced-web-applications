@@ -49,9 +49,9 @@ In this project, you will demonstrate your mastery of these skills by creating *
 
 ### Route Authentication
 
-- [ ] Build a `PrivateRoute` component within the components folder.
-- [ ] Use the `PrivateRoute` component to build a route rendering `View.js` to the path `/view`.
-- [ ] Use the `PrivateRoute` component to build a route rendering `Logout.js` to the path `/logout`.
+- [done] Build a `PrivateRoute` component within the components folder.
+- [done] Use the `PrivateRoute` component to build a route rendering `View.js` to the path `/view`.
+- [done] Use the `PrivateRoute` component to build a route rendering `Logout.js` to the path `/logout`.
 
 ### Request Authentication
 
