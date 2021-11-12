@@ -7,11 +7,10 @@ import EditForm from "./EditForm";
 import articleService from "../services/articleServices";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
-const View = (props) => {
+const View = () => {
   const [articles, setArticles] = useState([]);
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState();
-
   useEffect(() => {
     articleService().then((res) => {
       setArticles(res);
