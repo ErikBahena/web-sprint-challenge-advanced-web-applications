@@ -1,15 +1,68 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
+
+import axios from "axios";
+
+const initialFormState = {
+  username: "",
+  password: "",
+};
+const initialFormError = "";
 
 const Login = () => {
-    
-    return(<ComponentContainer>
-        <ModalContainer>
-            <h1>Welcome to Blogger Pro</h1>
-            <h2>Please enter your account information.</h2>
-        </ModalContainer>
-    </ComponentContainer>);
-}
+  const [formState, setFormState] = useState(initialFormState);
+  const [error, setError] = useState(initialFormError);
+
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(`http://localhost:5000/api/login`, formState)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+      })
+      .catch((err) => {
+        setError("The username or password is incorrect");
+      });
+  };
+
+  return (
+    <ComponentContainer>
+      <ModalContainer>
+        <h1>Welcome to Blogger Pro</h1>
+        <h2>Please enter your account information.</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            value={formState.username}
+            id="username"
+            onChange={handleChange}
+            name="username"
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            value={formState.password}
+            id="password"
+            onChange={handleChange}
+            name="password"
+          />
+          {/* I maybe could have included conditional rendering for this paragraph but I dont like the modal box growing and shrinking when there is an error. I think it looks unprofessional. */}
+          <p id="error">{error}</p>
+          <button type="submit" id="submit">
+            Login
+          </button>
+        </form>
+      </ModalContainer>
+    </ComponentContainer>
+  );
+};
 
 export default Login;
 
@@ -22,36 +75,36 @@ export default Login;
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
 
 const ComponentContainer = styled.div`
-    height: 70%;
-    justify-content: center;
-    align-items: center;
-    display:flex;
-`
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
 
 const ModalContainer = styled.div`
-    width: 500px;
-    background: white;
-    padding: 2rem;
-    text-align: center;
-`
+  width: 500px;
+  background: white;
+  padding: 2rem;
+  text-align: center;
+`;
 
 const Label = styled.label`
-    display: block;
-    text-align: left;
-    font-size: 1.5rem;
-`
+  display: block;
+  text-align: left;
+  font-size: 1.5rem;
+`;
 
 const FormGroup = styled.form`
-    padding:1rem;
-`
+  padding: 1rem;
+`;
 
 const Input = styled.input`
-    font-size: 1rem;
-    padding: 1rem 0;
-    width:100%;
-`
+  font-size: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+`;
 
 const Button = styled.button`
-    padding:1rem;
-    width: 100%;
-`
+  padding: 1rem;
+  width: 100%;
+`;
